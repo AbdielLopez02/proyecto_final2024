@@ -1,0 +1,67 @@
+/* Fondo negro para el cuerpo */
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: #1e1e2d;
+}
+
+/* Contenedor de la imagen con fondo negro */
+.image-container {
+    position: relative;
+    height: 100vh;
+    width: 120vh;
+    overflow: hidden; 
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.7)); /* Sombra de la imagen */
+
+}
+
+.curved-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: ellipse(72% 92% at 28% 16%); 
+}
+
+/* Sección del formulario */
+.bg-dark-blue {
+    background-color: #1e1e2d; /* Color de fondo oscuro */
+    padding: 40px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px; 
+}
+
+.text-light {
+    color: #ffffff;
+}
+
+/* Inputs personalizados */
+.form-control {
+    background-color: #333;
+    border: none;
+    color: #ffffff;
+}
+
+.form-label {
+    color: #999;
+}
+
+/* Estilo del botón */
+.btn-primary {
+    background-color: #5568fe;
+    border-color: #5568fe;
+}
+
+.btn-primary:hover {
+    background-color: #3b50d4;
+}
+
+/* Social media buttons */
+.btn-floating i {
+    font-size: 1.5rem;
+    color: #ffffff;
+}

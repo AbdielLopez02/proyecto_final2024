@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet>
+        <servlet-name>Validar</servlet-name>
+        <servlet-class>controlador.Validar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sr_empleado</servlet-name>
+        <servlet-class>controlador.sr_empleado</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>main</servlet-name>
+        <servlet-class>controlador.main</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sr_puestos</servlet-name>
+        <servlet-class>controlador.sr_puestos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Validar</servlet-name>
+        <url-pattern>/Validar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sr_empleado</servlet-name>
+        <url-pattern>/sr_empleado</url-pattern>
+    </servlet-mapping>
+    <dependency>
+        <groupId>org.mindrot</groupId>
+        <artifactId>jbcrypt</artifactId>
+        <version>0.4</version>
+    </dependency>
+    <servlet-mapping>
+        <servlet-name>main</servlet-name>
+        <url-pattern>/main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sr_puestos</servlet-name>
+        <url-pattern>/sr_puestos</url-pattern>
+    </servlet-mapping>
+</web-app>
