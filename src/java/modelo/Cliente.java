@@ -4,21 +4,22 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class Cliente extends Persona {
 
     private String nit, correo_electronico;
-    private int id_cliente;
+    private int id;
 
     conexion cn;
 
-    public Cliente() {}
+    public Cliente(){}
 
-    public Cliente(String nit, String correo_electronico, int id_cliente, String nombres, String apellidos, String telefono, int genero, String fecha_ingreso) {
+    public Cliente(String nit, String correo_electronico, int id, String nombres, String apellidos, String telefono, int genero, String fecha_ingreso) {
         super(nombres, apellidos, telefono, genero, fecha_ingreso);
         this.nit = nit;
         this.correo_electronico = correo_electronico;
-        this.id_cliente = id_cliente;
+        this.id = id;
     }
 
     public String getNit() {
@@ -37,122 +38,157 @@ public class Cliente extends Persona {
         this.correo_electronico = correo_electronico;
     }
 
-    public int getId_cliente() {
-        return id_cliente;
+    public int getId() {
+        return id;
     }
 
-    public void setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId(int id) {
+        this.id = id;
     }
+    
+
+     public HashMap<String, String> drop_clientes() {
+        HashMap<String, String> drop = new HashMap<>();
+        try {
+        String query = "SELECT id_cliente, nombres, apellidos, nit, genero, telefono, correo_electronico, fecha_ingreso FROM clientes;";
+            cn = new conexion(); // Asegúrate de que la clase conexion esté implementada
+            cn.abrir_conexion();
+            ResultSet consulta = cn.conexionDB.createStatement().executeQuery(query);
+
+            // Recorre los resultados y almacena los empleados en el HashMap
+            while (consulta.next()) {
+                drop.put(consulta.getString("id_cliente"), consulta.getString("nombres") + " - " + consulta.getString("nit"));
+            }
+            cn.cerrar_conexion();
+        } catch (SQLException ex) {
+            System.out.println("Error en drop_clientes: " + ex.getMessage());
+        }
+        return drop;
+    }
+
+    
 
     @Override
     public DefaultTableModel leer() {
-        DefaultTableModel tabla = new DefaultTableModel();
-        try {
-            cn = new conexion();
-            cn.abrir_conexion();
-            String query = "SELECT id_cliente, nombres, apellidos, nit, genero, telefono, correo_electronico, fecha_ingreso FROM clientes;";
+    DefaultTableModel tabla = new DefaultTableModel();
+    try {
+        cn = new conexion();
+        cn.abrir_conexion();
+        
+        String query = "SELECT id_cliente, nombres, apellidos, nit, genero, telefono, correo_electronico, fecha_ingreso FROM clientes;";
+        System.out.println("Ejecutando consulta: " + query); // Mensaje de depuración
+        
+        ResultSet consulta = cn.conexionDB.createStatement().executeQuery(query);
 
-            ResultSet consulta = cn.conexionDB.createStatement().executeQuery(query);
+        // Definir encabezados de la tabla
+        String encabezado[] = {"id", "nombres", "apellidos", "nit", "genero", "telefono", "correo_electronico", "ingreso"};
+        tabla.setColumnIdentifiers(encabezado);
 
-            String encabezado[] = {"id_cliente", "nombres", "apellidos", "nit", "genero", "telefono", "correo_electronico", "fecha_ingreso"};
-            tabla.setColumnIdentifiers(encabezado);
+        String datos[] = new String[8]; // Cambiado a 8 porque solo hay 8 columnas
+        int filaCount = 0; // Contador de filas
 
-            String datos[] = new String[12];
-            while (consulta.next()) {
-                datos[0] = consulta.getString("id_cliente");
-                datos[1] = consulta.getString("nombres");
-                datos[2] = consulta.getString("apellidos");
-                datos[3] = consulta.getString("nit");
-
+        while (consulta.next()) {
+            // Recuperar datos de la consulta
+            datos[0] = consulta.getString("id_cliente"); // Cambiado a id_cliente
+            datos[1] = consulta.getString("nombres");
+            datos[2] = consulta.getString("apellidos");
+            datos[3] = consulta.getString("nit");
             int genero = consulta.getInt("genero");
-            if (genero == 1) {
-                datos[4] = "Femenino";
-            } else {
-                datos[4] = "Masculino";
-            }
+            datos[4] = (genero == 1) ? "Femenino" : "Masculino"; // Asignar género
+            datos[5] = consulta.getString("telefono");
+            datos[6] = consulta.getString("correo_electronico");
+            datos[7] = consulta.getString("fecha_ingreso");
 
-                datos[5] = consulta.getString("telefono");
-                datos[6] = consulta.getString("correo_electronico");
-                datos[7] = consulta.getString("fecha_ingreso");
+            // Agregar fila a la tabla
+            tabla.addRow(datos);
+            filaCount++; // Incrementar contador de filas
 
-                tabla.addRow(datos);
-            }
-            cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println("Error en leer: " + ex.getMessage());
+            // Mensaje de depuración para cada fila
+            System.out.println("Fila " + filaCount + ": " + String.join(", ", datos));
         }
-        return tabla;
+
+        System.out.println("Total de filas recuperadas: " + filaCount); // Mensaje de total de filas
+        cn.cerrar_conexion();
+    } catch (SQLException ex) {
+        System.out.println("Error en leer: " + ex.getMessage());
     }
+    return tabla;
+}
+
+
 
     @Override
-    public int crear() {
-        int retorno = 0;
-        try {
-            PreparedStatement parametro;
-            cn = new conexion();
-            String query = "INSERT INTO clientes('id_cliente', `nombres`, `apellidos`, 'nit', `genero`, 'telefono', 'correo_electronico', 'fecha_ingreso') VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-            cn.abrir_conexion();
-            parametro = (PreparedStatement) cn.conexionDB.prepareStatement(query);
+public int crear() {
+    int retorno = 0;
+    try {
+        PreparedStatement parametro;
+        cn = new conexion();
+        String query = "INSERT INTO clientes(nombres, apellidos, nit, telefono, genero, correo_electronico, fecha_ingreso) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        cn.abrir_conexion();
+        parametro = (PreparedStatement) cn.conexionDB.prepareStatement(query);
 
-            parametro.setInt(1, getId_cliente());
-            parametro.setString(2, getNombres());
-            parametro.setString(3, getApellidos());
-            parametro.setString(4, getNit());
-            parametro.setInt(5, getGenero());
-            parametro.setString(6, getTelefono()); // Manejado como boolean en Java
-            parametro.setString(7, getCorreo_electronico());
-            parametro.setString(8, getFecha_ingreso());
-            retorno = parametro.executeUpdate();
-            cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return retorno;
-    }
+        // Asigna los valores del objeto Cliente a los parámetros de la consulta
+        parametro.setString(1, getNombres());
+        parametro.setString(2, getApellidos());
+        parametro.setString(3, getNit());
+        parametro.setString(4, getTelefono());
+        parametro.setInt(5, getGenero()); // Manejado como boolean en Java
+        parametro.setString(6, getCorreo_electronico()); // Cambiado a correo_electronico
+        parametro.setString(7, getFecha_ingreso());
 
-    @Override
-    public int actualizar() {
-        int retorno = 0;
-        try {
-            PreparedStatement parametro;
-            cn = new conexion();
-            String query = "UPDATE clientes SET id_cliente = ?, nombres = ?, apellidos = ?, genero = ?, telefono = ?, correo_electronico = ?, fecha_ingreso = ? WHERE id_cliente = ?;";
-            cn.abrir_conexion();
-            parametro = (PreparedStatement) cn.conexionDB.prepareStatement(query);
-            parametro.setInt(1, getId_cliente());
-            parametro.setString(2, getNombres());
-            parametro.setString(3, getApellidos());
-            parametro.setString(4, getNit());
-            parametro.setInt(5, getGenero()); // Manejado como boolean en Java
-            parametro.setString(6, getTelefono());
-            parametro.setString(7, getCorreo_electronico());            
-            parametro.setString(8, getFecha_ingreso());            
-            retorno = parametro.executeUpdate();
-            cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return retorno;
+        retorno = parametro.executeUpdate();
+        cn.cerrar_conexion();
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
     }
+    return retorno;
+}
 
-    @Override
-    public int eliminar() {
-        int retorno = 0;
-        try {
-            PreparedStatement parametro;
-            cn = new conexion();
-            String query = "DELETE FROM clientes WHERE id_cliente = ?;";
-            cn.abrir_conexion();
-            parametro = (PreparedStatement) cn.conexionDB.prepareStatement(query);
-            parametro.setInt(1, getId_cliente());
-            retorno = parametro.executeUpdate();
-            System.out.println("Eliminación exitosa: " + retorno);
-            cn.cerrar_conexion();
-        } catch (SQLException ex) {
-            System.out.println("Error en eliminar: " + ex.getMessage());
-        }
-        return retorno;
+   @Override
+public int actualizar() {
+    int retorno = 0;
+    try {
+        PreparedStatement parametro;
+        cn = new conexion();
+        String query = "UPDATE clientes SET nombres = ?, apellidos = ?, nit = ?, telefono = ?, genero = ?, correo_electronico = ?, fecha_ingreso = ? WHERE id_cliente = ?;";
+        cn.abrir_conexion();
+        parametro = (PreparedStatement) cn.conexionDB.prepareStatement(query);
+        
+        // Asigna los valores del objeto Cliente a los parámetros de la consulta
+        parametro.setString(1, getNombres());
+        parametro.setString(2, getApellidos());
+        parametro.setString(3, getNit());
+        parametro.setString(4, getTelefono());
+        parametro.setInt(5, getGenero()); // Manejado como boolean en Java
+        parametro.setString(6, getCorreo_electronico()); // Cambiado a correo_electronico
+        parametro.setString(7, getFecha_ingreso());
+        parametro.setInt(8, getId()); // Asegúrate de que el ID sea correcto
+
+        retorno = parametro.executeUpdate();
+        cn.cerrar_conexion();
+    } catch (SQLException ex) {
+        System.out.println(ex.getMessage());
     }
+    return retorno;
+}
+
+   @Override
+public int eliminar() {
+    int retorno = 0;
+    try {
+        PreparedStatement parametro;
+        cn = new conexion();
+        String query = "DELETE FROM clientes WHERE id_cliente = ?;";
+        cn.abrir_conexion();
+        parametro = (PreparedStatement) cn.conexionDB.prepareStatement(query);
+        parametro.setInt(1, getId()); // Asegúrate de que el ID sea correcto
+        retorno = parametro.executeUpdate();
+        System.out.println("Eliminación exitosa: " + retorno);
+        cn.cerrar_conexion();
+    } catch (SQLException ex) {
+        System.out.println("Error en eliminar: " + ex.getMessage());
+    }
+    return retorno;
+}
 
 }
