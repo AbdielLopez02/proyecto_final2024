@@ -9,14 +9,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import modelo.Empleado;
+import modelo.Proveedor;
 
 /**
  *
  * @author Kenneth
  */
 public class sr_proveedor extends HttpServlet {
-    Empleado empleado;
+    Proveedor proveedor;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,48 +33,42 @@ public class sr_proveedor extends HttpServlet {
 
         try {
             // Inicializar el objeto Empleado con los parámetros recibidos
-            empleado = new Empleado(
-                request.getParameter("txt_dpi"), // dpi
+            proveedor = new Proveedor(
+                request.getParameter("txt_idpr"), // id_proveedor
+                request.getParameter("txt_proveedor"), // proveedor
+                Integer.parseInt(request.getParameter("txt_nit")), // nit
                 request.getParameter("txt_direccion"), // direccion
-                request.getParameter("txt_fn"), // fecha_nacimiento
-                request.getParameter("txt_fl"), // fecha_inicio_labores
-                Integer.parseInt(request.getParameter("txt_id")), // id
-                Integer.parseInt(request.getParameter("drop_puesto")), // id_puesto
-                request.getParameter("txt_nombres"), // nombres
-                request.getParameter("txt_apellidos"), // apellidos
-                request.getParameter("txt_telefono"), // telefono
-                Integer.parseInt(request.getParameter("txt_genero")), // genero (esto es un int)
-                request.getParameter("txt_fi") // fecha_ingreso
+                request.getParameter("txt_telefono") // telefono
             );
 
             // Manejar las operaciones según el botón presionado
             if ("crear".equals(request.getParameter("btn_crear"))) {
-                if (empleado.crear() > 0) {
-                    response.sendRedirect("vista/ventas/empleados.jsp?status=success&action=crear");
+                if (proveedor.crear() > 0) {
+                    response.sendRedirect("vista/compras/proveedores.jsp?status=success&action=crear");
                 } else {
-                    response.sendRedirect("vista/ventas/empleados.jsp?status=error&action=crear");
+                    response.sendRedirect("vista/compras/proveedores.jsp?status=error&action=crear");
                 }
             }
 
             if ("actualizar".equals(request.getParameter("btn_actualizar"))) {
-                if (empleado.actualizar() > 0) {
-                    response.sendRedirect("vista/ventas/empleados.jsp?status=success&action=actualizar");
+                if (proveedor.actualizar() > 0) {
+                    response.sendRedirect("vista/compras/proveedores.jsp?status=success&action=actualizar");
                 } else {
-                    response.sendRedirect("vista/ventas/empleados.jsp?status=error&action=actualizar");
+                    response.sendRedirect("vista/compras/proveedores.jsp?status=error&action=actualizar");
                 }
             }
 
             if ("eliminar".equals(request.getParameter("btn_eliminar"))) {
-                if (empleado.eliminar() > 0) {
-                    response.sendRedirect("vista/ventas/empleados.jsp?status=success&action=eliminar");
+                if (proveedor.eliminar() > 0) {
+                    response.sendRedirect("vista/compras/proveedores.jsp?status=success&action=eliminar");
                 } else {
-                    response.sendRedirect("vista/ventas/empleados.jsp?status=error&action=eliminar");
+                    response.sendRedirect("vista/compras/proveedores.jsp?status=error&action=eliminar");
                 }
             }
         } catch (NumberFormatException e) {
-            response.sendRedirect("vista/ventas/empleados.jsp?status=error&action=invalid&message=Datos%20inválidos");
+            response.sendRedirect("vista/compras/proveedores.jsp?status=error&action=invalid&message=Datos%20inválidos");
         } catch (Exception e) {
-            response.sendRedirect("vista/ventas/empleados.jsp?status=error&action=exception&message=" + e.getMessage());
+            response.sendRedirect("vista/compras/proveedores.jsp?status=error&action=exception&message=" + e.getMessage());
         }
     }
 
