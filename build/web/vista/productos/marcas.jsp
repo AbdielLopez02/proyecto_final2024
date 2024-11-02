@@ -1,9 +1,11 @@
 
-<%@page import="javax.swing.table.DefaultTableModel"%>
-<%@page import= "modelo.Puesto" %>
-<%@page import= "modelo.Empleado" %>
-<%@page import = "java.util.HashMap" %>
+
+<%@page import="java.util.HashMap" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@page import="modelo.Marca" %>
+<%@page import="javax.swing.table.DefaultTableModel" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +103,7 @@
                       </a>
                     </li>   
                     <li>                        
-                        <a href="../productos/productos/marcas.jsp">
+                        <a href="../productos/marcas.jsp">
                         <span class="sub-item">CRUD Marcas</span>
                       </a>
                     </li>
@@ -185,7 +187,7 @@
       </div>
       <!-- End Sidebar -->
 
-      <div class="main-panel">
+      <div class="main-panel">     
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
@@ -215,7 +217,7 @@
             
             
             
-            
+
             
             
             
@@ -260,6 +262,73 @@
 
           <!-- End Navbar -->
         </div>
+                    
+      <br>
+      <br>
+      <br>
+      <br>
+      <div align="center"><h1>CATALOGO MARCAS</h1></div> 
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_marca" onclick="limpiar()" >AGREGAR MARCA</button>
+        <div class="container">
+            <div class="modal fade" id="modal_marca" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">FORMULARIO MARCAS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="../../sr_marcas" method="post" class="form-group">
+                <label for="lbl_id">ID:</label>
+                <input type="text" name="txt_id" id="txt_id" class="form-control" value="0" readonly>
+                
+                <label for="lbl_marca">MARCA:</label>
+                <input type="text" name="txt_marca" id="txt_marca" class="form-control" required>
+                <br>
+                <br>
+                <button name="btn_agregar" id="btn_agregar" value="agregar" class="btn btn-outline-success">AGREGAR</button>
+                <button name="btn_modificar" id="btn_modificar" value="modificar" class="btn btn-outline-primary">MODIFICAR</button>
+                <button name="btn_eliminar" id="btn_eliminar" value="eliminar" class="btn btn-outline-danger" onclick="javascript:if(!confirm('Desea Eliminar?'))return false" >ELIMINAR</button>
+                
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>                    
+                    
+                    
+                    
+                    
+                     <div class="container">
+  <h2>MARCAS</h2>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID_MARCA</th>
+        <th>MARCA</th>
+      </tr>
+    </thead>
+    <tbody id="tbl_marcas">
+         <%
+          Marca marca = new Marca();
+          DefaultTableModel tabla = new DefaultTableModel();
+          tabla = marca.mostrar();
+          for(int t = 0;t < tabla.getRowCount();t++){
+                out.println("<td>"+ tabla.getValueAt(t, 0) +"</td>");
+                out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
+                out.println("</tr>");
+             }
+          %>
+    </tbody>
+  </table>
+</div>
+    
 
         
 
@@ -292,6 +361,26 @@
    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-LZTz/rX2m2H/aAe4NYq40YxjL89DICM2Fev4M/tvSRe9TbFg8beP2B3Rar9A3zM0" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-e8dtFdxD4qRvTndk65X8zRLUblX2n8jNiMmjGu/AeGKeRi9c18OqdfdNwsHbcDBn" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
+<script type="text/javascript">
+                function limpiar(){
+                  $("#txt_id").val(0);
+                  $("#txt_marca").val('');
+                }
+
+                $('#tbl_marcas').on('click','tr td',function(evt){
+                  var target,id,marca;
+                  target = $(event.target);
+                  id = target.parent("tr").find("td").eq(0).html();
+                  marca = target.parent("tr").find("td").eq(1).html();
+                  
+                                  
+                  $("#txt_id").val(id);
+                  $("#txt_marca").val(marca);
+                  $("#modal_marca").modal('show');
+                });
+            </script>    
+
 
 
     <!-- jQuery Scrollbar -->
@@ -361,7 +450,11 @@
     </script>
     
     
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
        
 
 

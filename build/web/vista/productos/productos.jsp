@@ -1,9 +1,12 @@
 
-<%@page import="javax.swing.table.DefaultTableModel"%>
-<%@page import= "modelo.Puesto" %>
-<%@page import= "modelo.Empleado" %>
-<%@page import = "java.util.HashMap" %>
+
+<%@page import="java.util.HashMap" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="modelo.Producto" %>
+<%@page import="modelo.Marca" %>
+<%@page import="jakarta.servlet.http.Part"%>
+<%@page import="javax.swing.table.DefaultTableModel" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +39,7 @@
   
   
   
+
   
   
   <body>
@@ -48,7 +52,7 @@
            <a href="../../index.html" class="logo">
                 <img
                     src="../../resources/img/bot.png"
-                    alt="navbar brand"
+                    alt="navbar     brand"
                     class="navbar-brand"
                     height="50" >
                 
@@ -101,7 +105,7 @@
                       </a>
                     </li>   
                     <li>                        
-                        <a href="../productos/productos/marcas.jsp">
+                        <a href="../productos/marcas.jsp">
                         <span class="sub-item">CRUD Marcas</span>
                       </a>
                     </li>
@@ -185,7 +189,7 @@
       </div>
       <!-- End Sidebar -->
 
-      <div class="main-panel">
+      <div class="main-panel">     
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
@@ -215,7 +219,7 @@
             
             
             
-            
+
             
             
             
@@ -260,7 +264,127 @@
 
           <!-- End Navbar -->
         </div>
+                    
+      <br>
+      <br>
+      <br>
+      <br>
+      <div align="center"><h1>CATALOGO PRODUCTOS</h1></div> 
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_producto" onclick="limpiar()" >NUEVO PRODUCTO</button>
+        <div class="container">
+            <div class="modal fade" id="modal_producto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">FORMULARIO PRODUCTOS</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
 
+                <div name='div_img' method="post" id='div_img' class="image-container" align='center'>
+
+                </div>
+          
+          <form action="../../sr_producto" method="post" class="form-group" enctype="multipart/form-data">
+                <label for="lbl_id">ID:</label>
+                <input type="text" name="txt_id" id="txt_id" class="form-control" value="0" readonly>
+                
+                <label for="lbl_producto">PRODUCTO:</label>
+                <input type="text" name="txt_producto" id="txt_producto" class="form-control" required>
+                
+                <label for="lbl_marca">MARCA:</label>
+                <br>
+                <select name="drop_marca" id="drop_marca" class="form_control">
+                    <%
+                        Marca marca = new Marca();
+                        HashMap<String,String> drop = marca.drop_marca();
+                        for(String i:drop.keySet()){
+                            out.println("<option value='"+ i +"'>" + drop.get(i) +"</option>");
+                        }
+                    %>
+                </select>
+                <br>
+                <br>
+                <label for="lbl_descripcion">DESCRIPCION:</label>
+                <input type="text" name="txt_descripcion" id="txt_descripcion" class="form-control" required>
+                <br>
+                <label name='lbl_imagen' id='lbl_imagen' for="lbl_imagen">IMAGEN:</label>
+                <button name="btn_camimgprod" id="btn_camimgprod" type="button" value="cambiarimg" onclick="cambiar_img()">CAMBIAR IMAGEN</button>
+                <br>
+                <input type="file" name="fl_imagen" id="fl_imagen" class="form-control" >
+                <br>
+                <label for="lbl_precio_costo">PRECIO_COSTO:</label>
+                <input type="text" name="txt_precio_costo" id="txt_precio_costo" class="form-control" required>
+                
+                <label for="lbl_precio_venta">PRECIO_VENTA:</label>
+                <input type="text" name="txt_precio_venta" id="txt_precio_venta" class="form-control" required>
+                
+                <label for="lbl_existencia">EXISTENCIA:</label>
+                <input type="number" name="txt_existencia" id="txt_existencia" class="form-control" required>
+                
+                <label for="lbl_fecha_ingreso">FECHA INGRESO:</label>
+                <input type="date" name="txt_fecha_ingreso" id="txt_fecha_ingreso" class="form-control" required>
+                
+
+                
+                <br>
+                <br>
+                <button name="btn_agregar" id="btn_agregar" value="agregar" class="btn btn-outline-success">AGREGAR</button>
+                <button name="btn_modificar" id="btn_modificar" value="modificar" class="btn btn-outline-primary">MODIFICAR</button>
+                <button name="btn_eliminar" id="btn_eliminar" value="eliminar" class="btn btn-outline-danger" onclick="javascript:if(!confirm('DESEA ELIMINAR EL REGISTRO SELECCIONADO?'))return false" >ELIMINAR</button>
+                
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>                    
+                    
+                 
+    <div class="container">
+  <h2>PRODUCTOS EN EXISTENCIA</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>PRODUCTO</th>
+        <th>MARCA</th>
+        <th>DESCRIPCION</th>
+        <th>IMAGEN</th>
+        <th>PRECIO_COSTO</th>
+        <th>PRECIO_VENTA</th>
+        <th>EXISTENCIA</th>
+        <th>FECHA_INGRESO</th>
+      </tr>
+    </thead>
+    <tbody id="tbl_producto">
+         <%
+          Producto prod = new Producto();
+          DefaultTableModel tabla = new DefaultTableModel();
+          tabla = prod.mostrar();
+          for(int t = 0;t < tabla.getRowCount();t++){
+                out.println("<tr data-id_producto=" + tabla.getValueAt(t, 0) + " data-id_marca=" + tabla.getValueAt(t, 1) + ">");
+                out.println("<td align='center'>"+ tabla.getValueAt(t, 2) +"</td>");
+                out.println("<td align='center'>"+ tabla.getValueAt(t, 3) +"</td>");
+                out.println("<td align='center'>"+ tabla.getValueAt(t, 4) +"</td>");
+                out.println("<td align='center'> <img  src="+ tabla.getValueAt(t, 5) +" width='100'></td>");
+                out.println("<td align='center'>"+ tabla.getValueAt(t, 6) +"</td>");
+                out.println("<td align='center'>"+ tabla.getValueAt(t, 7) +"</td>");
+                out.println("<td align='center'>"+ tabla.getValueAt(t, 8) +"</td>");
+                out.println("<td align='center'>"+ tabla.getValueAt(t, 9) +"</td>");
+                out.println("</tr>");
+             }
+          %>
+    </tbody>
+  </table>
+</div>
+    
+    
+    
         
 
        <footer class="footer">
@@ -292,6 +416,70 @@
    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-LZTz/rX2m2H/aAe4NYq40YxjL89DICM2Fev4M/tvSRe9TbFg8beP2B3Rar9A3zM0" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-e8dtFdxD4qRvTndk65X8zRLUblX2n8jNiMmjGu/AeGKeRi9c18OqdfdNwsHbcDBn" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
+<script type="text/javascript">
+                function cambiar_img(){
+                  $("#fl_imagen").show();
+                  $("#btn_cambimgprod").hide();
+                  $("#lbl_imagen").show();
+              }
+                function limpiar(){
+                  $("#btn_modificar").hide();
+                  $("#btn_eliminar").hide();
+                  $("#btn_camimgprod").hide();
+                  $("#txt_id").val(0);
+                  $("#txt_producto").val('');
+                  $("#drop_marca").val(0);
+                  $("#txt_descripcion").val('');
+                  //$("#txt_imagen").val('');
+                  $("#fl_imagen").show();
+                  //$("#div_img").hide();
+                  $("#txt_precio_costo").val('');
+                  $("#txt_precio_venta").val('');
+                  $("#txt_existencia").val('');
+                  $("#txt_fecha_ingreso").val(''); 
+                  $("#div_img").hide();
+                  $("#btn_agregar").show();
+                  $("#lbl_imagen").show();
+                  
+                }
+                
+                $('#tbl_producto').on('click','tr td',function(evt){
+                  var target,id_producto,id_marca,producto,marca,descripcion,precio_costo,precio_venta,existencia,fecha_ingreso,imagen;
+                  target = $(event.target);
+                  id_producto = target.parent().data('id_producto');
+                  id_marca = target.parent().data('id_marca');
+                  producto = target.parent("tr").find("td").eq(0).html();
+                  marca = target.parent("tr").find("td").eq(1).html();
+                  descripcion = target.parent("tr").find("td").eq(2).html();
+                  imagen = target.parent("tr").find("td").eq(3).html();
+                  precio_costo = target.parent("tr").find("td").eq(4).html();
+                  precio_venta = target.parent("tr").find("td").eq(5).html();
+                  existencia = target.parent("tr").find("td").eq(6).html();
+                  fecha_ingreso = target.parent("tr").find("td").eq(7).html();
+                  
+                  const div = document.getElementById('div_img');
+                  div.innerHTML = imagen;
+                  $("#btn_camimgprod").show();
+                  $("#fl_imagen").hide();
+                  $("#div_img").show();
+                  $("#btn_agregar").hide();
+                  $("#txt_id").val(id_producto);
+                  $("#txt_producto").val(producto);
+                  $("#drop_marca").val(id_marca);
+                  $("#txt_descripcion").val(descripcion);
+                  $("#lbl_imagen").hide();
+                  $("#txt_precio_costo").val(precio_costo);
+                  $("#txt_precio_venta").val(precio_venta);
+                  $("#txt_existencia").val(existencia);
+                  $("#txt_fecha_ingreso").val(fecha_ingreso);
+                  $("#modal_producto").modal('show');
+                  $("#btn_modificar").show();
+                  $("#btn_eliminar").show();
+                  
+                });
+            </script>    
+
 
 
     <!-- jQuery Scrollbar -->
@@ -361,7 +549,11 @@
     </script>
     
     
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
        
 
 
