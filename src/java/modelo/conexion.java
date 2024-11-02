@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class conexion {
     // Detalles de conexión
     private final String puerto = "3306";
-    private final String db = "proyecto_empresa";
+    private final String db = "proyecto_empresa2";
     private final String urlConexion = String.format("jdbc:mysql://127.0.0.1:%s/%s?serverTimezone=UTC", puerto, db);
     private final String usuario = "root2";
     private final String contra = "1234b";

@@ -31,6 +31,46 @@ public Compra(){}
         this.no_orden_compra = no_orden_compra;
     }
 
+    public String getFecha_orden() {
+        return fecha_orden;
+    }
+
+    public void setFecha_orden(String fecha_orden) {
+        this.fecha_orden = fecha_orden;
+    }
+
+    public String getFecha_ingreso() {
+        return fecha_ingreso;
+    }
+
+    public void setFecha_ingreso(String fecha_ingreso) {
+        this.fecha_ingreso = fecha_ingreso;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId_proveedor() {
+        return id_proveedor;
+    }
+
+    public void setId_proveedor(int id_proveedor) {
+        this.id_proveedor = id_proveedor;
+    }
+
+    public int getNo_orden_compra() {
+        return no_orden_compra;
+    }
+
+    public void setNo_orden_compra(int no_orden_compra) {
+        this.no_orden_compra = no_orden_compra;
+    }
+
     // Getters y Setters...
 
     public DefaultTableModel leer() {

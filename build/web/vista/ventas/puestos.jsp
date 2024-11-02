@@ -39,152 +39,10 @@
   
   
   <body>
-    <div class="wrapper">
-      <!-- Sidebar -->
-      <div class="sidebar" data-background-color="dark">
-        <div class="sidebar-logo">
-          <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-           <a href="../../index.html" class="logo">
-                <img
-                    src="../../resources/img/bot.png"
-                    alt="navbar brand"
-                    class="navbar-brand"
-                    height="50" >
-                
-                <span class="logo-text">System Project</span> 
-            </a>
-
-
-            <div class="nav-toggle">
-              <button class="btn btn-toggle toggle-sidebar">
-                <i class="gg-menu-right"></i>
-              </button>
-              <button class="btn btn-toggle sidenav-toggler">
-                <i class="gg-menu-left"></i>
-              </button>
-            </div>
-            <button class="topbar-toggler more">
-              <i class="gg-more-vertical-alt"></i>
-            </button>
-          </div>
-          <!-- End Logo Header -->
-        </div>
-    <div class="sidebar-wrapper scrollbar scrollbar-inner">
-          <div class="sidebar-content">
-            <ul class="nav nav-secondary">  
-                <li class="nav-item active">
-            <a href="../../index.html" class="nav-link">
-                <i class="bi bi-house-door-fill"></i>
-                <p>Home</p>
-            </a>
-        </li>
-              <li class="nav-section">
-                <span class="sidebar-mini-icon">
-                <i class="bi bi-three-dots"></i>                
-                </span>
-                <h4 class="text-section">Menu Tablas</h4>
-              </li>
-             
-              
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#productos">
-                  <i class="bi bi-box-seam-fill"></i>
-                  <p>Productos</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="productos">
-                     <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../productos/productos.jsp">
-                        <span class="sub-item">CRUD Productos</span>
-                      </a>
-                    </li>   
-                    <li>                        
-                        <a href="../productos/productos/marcas.jsp">
-                        <span class="sub-item">CRUD Marcas</span>
-                      </a>
-                    </li>
-                  </ul>
-                  
-                </div>
-              </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#ventas">
-                   <i class="bi bi-currency-exchange"></i>
-                   <p>Ventas</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="ventas">
-                  <ul class="nav nav-collapse">
-                     <li>
-                      <a href="../ventas/ventas.jsp">
-                        <span class="sub-item">CRUD Ventas</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/clientes.jsp">
-                        <span class="sub-item">CRUD Clientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/empleados.jsp">
-                        <span class="sub-item">CRUD Empleados</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/puestos.jsp">
-                        <span class="sub-item">CRUD Puestos</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>             
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#compras">
-                    <i class="bi bi-cart4"></i>
-                    <p>Compras</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="compras">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../compras/compras.jsp">
-                        <span class="sub-item">CRUD Compras</span>
-                      </a>
-                    </li> 
-                    <li>
-                      <a href="../compras/proveedores.jsp">
-                        <span class="sub-item">CRUD Proveedores</span>
-                      </a>
-                    </li>                    
-                  </ul>
-                </div>
-              </li>
-               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#reportes">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <p>Reportes</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="reportes">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../reportes/reportes.jsp">
-                        <span class="sub-item">Realizar reporte</span>
-                      </a>
-                    </li>                   
-                  </ul>
-                </div>
-              </li>
-             
-              
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- End Sidebar -->
-
+     <div class="wrapper">
+     
+      <%@ include file="/menu.jsp" %>
+       
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -196,7 +54,7 @@
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
-                />
+                  />
               </a>
               <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -205,7 +63,7 @@
                 <button class="btn btn-toggle sidenav-toggler">
                   <i class="gg-menu-left"></i>
                 </button>
-              </div>
+               </div>
               <button class="topbar-toggler more">
                 <i class="gg-more-vertical-alt"></i>
               </button>
@@ -221,10 +79,8 @@
             
             
           <!-- Navbar Header -->
-      <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+             <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                 <div class="container-fluid">
-
-
                  <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
 
@@ -249,56 +105,61 @@
                         <i class="bi bi-box-arrow-left me-2"></i>
                         <span>Logout</span>
                       </a>
-                    </li>
-                  </div>
-                </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
 
 
           <!-- End Navbar -->
-        </div>
+       </div>
 
-        <div class="container">
+        <!--Espacio para contenido-->
+
+                  
+         
+
+          <div class="container">
              <!-- The Modal -->
-<div class="modal fade" id="modal_puestos">
-  <div class="modal-dialog">
-    <div class="modal-content">
+        <div class="modal fade" id="modal_puestos">
+          <div class="modal-dialog">
+            <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Formulario</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Formulario</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-          <form  action="<%= request.getContextPath() %>/sr_puestos"  method="post" class="form-group needs-validation" novalidate> <!-- get = envio de parametrosurl, post = oculto -->
-        
-            <label  for = "lbl_id_puestos" class="form-label"><b>ID</b></label>
-            <input type="text" name="txt_id_puesto" id="txt_id_puesto" class="form-control" value = "0" readonly>
-            
-            <br>                                
-            <label for = "lbl_puestos" class="form-label"><b>Puestos</b></label>
-            <input type="text" id="txt_puesto" name="txt_puesto" class="form-control" required placeholder="Ingrese el puesto">
-                                          
-            <br>
-            <button name="btn_crear" id="btn_crear" value="crear" class="btn btn-primary" type="submit"><i class="bi bi-floppy"></i></button>
-            <button name="btn_actualizar" id="btn_actualizar" value="actualizar" class="btn btn-warning" type="submit"><i class="bi bi-arrow-down-up"></i></button>
-            <button name="btn_eliminar" id="btn_eliminar" value="eliminar" class="btn btn-danger" type="submit" onclick="javascript:if(!confirm('¿Desea Eliminarl?'))return false"><i class="bi bi-trash"></i></button>
-  </form>
-      </div>
+              <!-- Modal body -->
+              <div class="modal-body">
+                  <form  action="<%= request.getContextPath() %>/sr_puestos"  method="post" class="form-group needs-validation" novalidate> <!-- get = envio de parametrosurl, post = oculto -->
 
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
+                    <label  for = "lbl_id_puestos" class="form-label"><b>ID</b></label>
+                    <input type="text" name="txt_id_puesto" id="txt_id_puesto" class="form-control" value = "0" readonly>
 
-    </div>
-  </div>
-</div>
+                    <br>                                
+                    <label for = "lbl_puestos" class="form-label"><b>Puestos</b></label>
+                    <input type="text" id="txt_puesto" name="txt_puesto" class="form-control" required placeholder="Ingrese el puesto">
+
+                    <br>
+                    <button name="btn_crear" id="btn_crear" value="crear" class="btn btn-primary" type="submit"><i class="bi bi-floppy"></i></button>
+                    <button name="btn_actualizar" id="btn_actualizar" value="actualizar" class="btn btn-warning" type="submit"><i class="bi bi-arrow-down-up"></i></button>
+                    <button name="btn_eliminar" id="btn_eliminar" value="eliminar" class="btn btn-danger" type="submit" onclick="javascript:if(!confirm('¿Desea Eliminarl?'))return false"><i class="bi bi-trash"></i></button>
+          </form>
+              </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
                 
           <div class="page-inner">
             <div class="page-header">
@@ -348,19 +209,14 @@
             </div>
           </div>
         </div>
+        
+        
 
-       <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              
-            </nav>
-            
-            
-          </div>
-        </footer>
+
+                  
+                  
+        
       </div>
-
-     
     </div>
       
       
@@ -476,6 +332,8 @@ $('#tbl_puestos').on('click', 'tr td', function(evt) {
     $("#modal_puestos").modal('show');
 });
 </script>
+
+
 
   </body>
 </html>

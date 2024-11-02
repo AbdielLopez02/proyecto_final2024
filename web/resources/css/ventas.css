@@ -1,0 +1,39 @@
+.form-columns {
+    display: flex;
+    gap: 43px; /* Espacio entre las columnas izquierda y derecha */
+    width: 100%;
+}
+
+.column-left, .column-right {
+    flex: 1; /* Hace que ambas columnas ocupen el mismo ancho */
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+form#miFormulario {
+    width: 100%; /* Para que el formulario ocupe todo el ancho disponible */
+    padding: 20px;
+    box-sizing: border-box; /* Para incluir el padding en el cálculo del ancho */
+}
+
+#productos-container {
+    width: 100%;
+}
+
+.producto-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.producto-item .form-group {
+    flex: 1; /* Hace que cada form-group dentro de producto-item ocupe el mismo espacio */
+}
+
+/* Opcional: Ajustar la tabla para mejorar su integración con el formulario */
+.table-container {
+    margin-top: 20px; /* Añadir un poco de espacio entre el formulario y la tabla */
+}

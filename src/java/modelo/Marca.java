@@ -12,25 +12,29 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Juanjo SR
+ * @author Kenneth
  */
 public class Marca {
+    
+    
+    int id;
+    String marca;
     conexion cn;
-    private int id_marca;
-    private String marca;
+
+   
     
     public Marca(){}
-    public Marca(int id_marca, String marca) {
-        this.id_marca = id_marca;
+    public Marca(int id, String marca) {
+        this.id = id;
         this.marca = marca;
     }
 
-    public int getId_marca() {
-        return id_marca;
+    public int getId() {
+        return id;
     }
 
-    public void setId_marca(int id_marca) {
-        this.id_marca = id_marca;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMarca() {
@@ -42,103 +46,106 @@ public class Marca {
     }
     
     
-    public DefaultTableModel mostrar(){
-        DefaultTableModel tabla = new DefaultTableModel();
-        try{
-            cn = new conexion();
-            cn.abrir_conexion();
-            String query = "select id_marca as id,marca from proyecto_empresa2.marcas order by id_marca asc";
-            ResultSet consulta =  cn.conexionDB.createStatement().executeQuery(query);
-            String encabezado[] = {"ID","MARCA"}; 
-            tabla.setColumnIdentifiers(encabezado);
-            String datos[] = new String[2];
-            while(consulta.next()){
-                datos[0] = consulta.getString("ID");
-                datos[1] = consulta.getString("MARCA");                
-                tabla.addRow(datos);
-            }
-            cn.cerrar_conexion();
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage());
-        }
-        return tabla;
-    }
-        
-        public int agregar(){
-        int retorno = 0;
-        try{
-            PreparedStatement parametro;
-            cn = new conexion();
-            String query = "insert into marcas(marca) values (?)";
-            cn.abrir_conexion();
-            parametro = (PreparedStatement)cn.conexionDB.prepareStatement(query);
-            parametro.setString(1, this.getMarca());
-            retorno = parametro.executeUpdate();
-            cn.cerrar_conexion();
-            
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage());
-            retorno = 0;
-        }
-        return retorno;
-    }
-        
-    public int modificar(){
-        int retorno = 0;
-        try{
-            PreparedStatement parametro;
-            cn = new conexion();
-            String query = "update marcas set marca = ? where id_marca = ?";
-            cn.abrir_conexion();
-            parametro = (PreparedStatement)cn.conexionDB.prepareStatement(query);
-            parametro.setString(1, this.getMarca());
-            parametro.setInt(2, this.getId_marca());
-            retorno = parametro.executeUpdate();
-            cn.cerrar_conexion();
-            
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage());
-            retorno = 0;
-        }
-        return retorno;
-    }
-    
-    public int eliminar(){
-        int retorno = 0;
-        try{
-            PreparedStatement parametro;
-            cn = new conexion();
-            String query = "delete from marcas where id_marca = ?";
-            cn.abrir_conexion();
-            parametro = (PreparedStatement)cn.conexionDB.prepareStatement(query);
-            parametro.setInt(1, this.getId_marca());
-            retorno = parametro.executeUpdate();
-            cn.cerrar_conexion();
-            
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage());
-            retorno = 0;
-        }
-        return retorno;
-    }
     
     
-    public HashMap drop_marca(){
-        HashMap<String,String> drop = new HashMap();
-        try{
+    
+    
+    
+    
+    
+    
+    
+    
+    public HashMap<String, String> drop_marcas() {
+        HashMap<String, String> drop = new HashMap<>();
+        try {
+            String query = "SELECT id_marca, marca FROM marcas;";
             cn = new conexion();
-            String query = "select id_marca as id,marca from proyecto_empresa2.marcas";
             cn.abrir_conexion();
             ResultSet consulta = cn.conexionDB.createStatement().executeQuery(query);
-            while(consulta.next()){
-                drop.put(consulta.getString("id"), consulta.getString("marca"));
+
+            while (consulta.next()) {
+                drop.put(consulta.getString("id_marca"), consulta.getString("marca"));
             }
             cn.cerrar_conexion();
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("Error en drop_marcas: " + ex.getMessage());
         }
         return drop;
     }
+public DefaultTableModel leer() {
+        DefaultTableModel tabla = new DefaultTableModel();
+        try {
+            cn = new conexion();
+            cn.abrir_conexion();
+            String query = "SELECT id_marca, marca FROM marcas;";
+            ResultSet consulta = cn.conexionDB.createStatement().executeQuery(query);
 
+            String[] encabezado = {"ID marca", "marca"};
+            tabla.setColumnIdentifiers(encabezado);
+
+            String[] datos = new String[2];
+            while (consulta.next()) {
+                datos[0] = consulta.getString("id_marca");
+                datos[1] = consulta.getString("marca");
+                tabla.addRow(datos);
+            }
+            cn.cerrar_conexion();
+        } catch (SQLException ex) {
+            System.out.println("Error en leer: " + ex.getMessage());
+        }
+        return tabla;
+    }
+
+    // Crear un nuevo puesto
+    public int crear() {
+        int retorno = 0;
+        try {
+            cn = new conexion();
+            String query = "INSERT INTO marcas (marca) VALUES (?);";
+            cn.abrir_conexion();
+            PreparedStatement parametro = cn.conexionDB.prepareStatement(query);
+            parametro.setString(1, getMarca());
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        } catch (SQLException ex) {
+            System.out.println("Error en crear: " + ex.getMessage());
+        }
+        return retorno;
+    }
+
+    // Actualizar un puesto existente
+    public int actualizar() {
+        int retorno = 0;
+        try {
+            cn = new conexion();
+            String query = "UPDATE marcas SET marca = ? WHERE id_marca = ?;";
+            cn.abrir_conexion();
+            PreparedStatement parametro = cn.conexionDB.prepareStatement(query);
+            parametro.setString(1, getMarca());
+            parametro.setInt(2, getId());
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        } catch (SQLException ex) {
+            System.out.println("Error en actualizar: " + ex.getMessage());
+        }
+        return retorno;
+    }
+
+    // Eliminar un puesto por su ID
+    public int eliminar() {
+        int retorno = 0;
+        try {
+            cn = new conexion();
+            String query = "DELETE FROM marcas WHERE id_marca = ?;";
+            cn.abrir_conexion();
+            PreparedStatement parametro = cn.conexionDB.prepareStatement(query);
+            parametro.setInt(1, getId());
+            retorno = parametro.executeUpdate();
+            cn.cerrar_conexion();
+        } catch (SQLException ex) {
+            System.out.println("Error en eliminar: " + ex.getMessage());
+        }
+        return retorno;
+    }
 }
-

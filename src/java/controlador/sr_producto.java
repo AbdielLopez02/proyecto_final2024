@@ -1,148 +1,107 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controlador;
 
-
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.Part;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import jakarta.servlet.http.Part;
 import modelo.Producto;
 
-/**
- *
- * @author Juanjo SR
- */
 @MultipartConfig
 public class sr_producto extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     Producto producto;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet sr_producto</title>");
-            out.println("</head>");
-            out.println("<body>");
-            //out.println("<h1>Servlet sr_producto at " + request.getContextPath() + "</h1>");
-            //
-            producto = new Producto(Integer.parseInt(request.getParameter("txt_id")),request.getParameter("txt_producto"),Integer.parseInt(request.getParameter("drop_marca")),request.getParameter("txt_descripcion"),Float.parseFloat(request.getParameter("txt_precio_costo")),Float.parseFloat(request.getParameter("txt_precio_venta")),Integer.parseInt(request.getParameter("txt_existencia")),request.getParameter("txt_fecha_ingreso"));
-                //boton agregar
-                if("agregar".equals(request.getParameter("btn_agregar"))){
-                    
-                try {
-                    producto.guardaImg((jakarta.servlet.http.Part) request.getPart("fl_imagen"));
-                }catch (SQLException ex) {
-                    Logger.getLogger(sr_producto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    if (producto.agregar() > 0){
-                        response.sendRedirect("vista/productos/productos.jsp");
-                        
-                    }else{
-                        out.println("<h>Se ha producido un error</h>");
-                        out.println("<a href = 'vista/productos/productos.jsp'>REGRESAR</a>");
-                    }
-                }
-                //boton modificar
-                if("modificar".equals(request.getParameter("btn_modificar"))){
-                    if(request.getPart("fl_imagen").getSize()>0){
-                        try {
-                            producto.guardaImg((jakarta.servlet.http.Part) request.getPart("fl_imagen"));
-                        }catch (SQLException ex) {
-                            Logger.getLogger(sr_producto.class.getName()).log(Level.SEVERE, null, ex);
-                        }
 
-                        if (producto.modificarCImg()> 0){
-                            response.sendRedirect("vista/productos/productos.jsp");
-                        }else{
-                            out.println("<h>Se ha producido un error</h>");
-                            out.println("<a href = 'vista/productos/productos.jsp'>REGRESAR</a>");
-                        }
+        try {
+            // Manejo de la carga de imagen
+            String imagenPath = null;
+            Part filePart = request.getPart("txt_imagen"); // Obtiene el archivo de imagen
 
-                    }else{
-                        if (producto.modificar()> 0){
-                            response.sendRedirect("vista/productos/productos.jsp");
-                        }else{
-                            out.println("<h>Se ha producido un error</h>");
-                            out.println("<a href = 'vista/productos/productos.jsp'>REGRESAR</a>");
-                        }
+            if (filePart != null && filePart.getSize() > 0) { // Verifica si hay un archivo
+                // Define la ruta donde se guardará la imagen
+                String uploadPath = "C:\\Users\\Kenneth\\Documents\\NetBeansProjects\\proyecto_f\\web\\resources\\img";
+                String fileName = filePart.getSubmittedFileName(); // Obtiene el nombre del archivo
+                imagenPath = "resources/img/" + fileName; // Ruta relativa a almacenar en la base de datos
+
+                // Crea el archivo en el sistema
+                File file = new File(uploadPath, fileName);
+                try (InputStream fileContent = filePart.getInputStream();
+                     FileOutputStream fos = new FileOutputStream(file)) {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = fileContent.read(buffer)) != -1) {
+                        fos.write(buffer, 0, bytesRead);
                     }
                 }
-                
-                //boton eliminar
-                if("eliminar".equals(request.getParameter("btn_eliminar"))){
-                    if (producto.eliminar()> 0){
-                        response.sendRedirect("vista/productos/productos.jsp");
-                    }else{
-                        out.println("<h>Se ha producido un error</h>");
-                        out.println("<a href = 'vista/productos/productos.jsp'>REGRESAR</a>");
-                    }
+            } else {
+                // Si no se ha subido una nueva imagen, se mantiene la imagen actual
+                int idProducto = Integer.parseInt(request.getParameter("txt_id"));
+                producto = new Producto().leerPorId(idProducto); // Cargar datos actuales del producto
+                imagenPath = producto.getImagen(); // Mantener la imagen existente
+            }
+
+            // Inicializar el objeto Producto con los parámetros recibidos
+            producto = new Producto(
+                Integer.parseInt(request.getParameter("txt_id")), // id_producto
+                request.getParameter("txt_producto"), // producto
+                Integer.parseInt(request.getParameter("drop_marcas")), // id_marca
+                request.getParameter("txt_descripcion"), // descripcion
+                imagenPath, // imagen (URL)
+                Double.parseDouble(request.getParameter("txt_precio_costo")), // precio_costo
+                Double.parseDouble(request.getParameter("txt_precio_venta")), // precio_venta
+                Integer.parseInt(request.getParameter("txt_existencia")), // existencia
+                request.getParameter("txt_fecha_ingreso") // fecha_ingreso
+            );
+
+            // Manejar las operaciones según el botón presionado
+            if ("crear".equals(request.getParameter("btn_crear"))) {
+                if (producto.crear() > 0) {
+                    response.sendRedirect("vista/productos/productos.jsp?status=success&action=crear");
+                } else {
+                    response.sendRedirect("vista/productos/productos.jsp?status=error&action=crear");
                 }
- 
-            out.println("</body>");
-            out.println("</html>");
+            }
+
+            if ("actualizar".equals(request.getParameter("btn_actualizar"))) {
+                if (producto.actualizar() > 0) {
+                    response.sendRedirect("vista/productos/productos.jsp?status=success&action=actualizar");
+                } else {
+                    response.sendRedirect("vista/productos/productos.jsp?status=error&action=actualizar");
+                }
+            }
+
+            if ("eliminar".equals(request.getParameter("btn_eliminar"))) {
+                if (producto.eliminar() > 0) {
+                    response.sendRedirect("vista/productos/productos.jsp?status=success&action=eliminar");
+                } else {
+                    response.sendRedirect("vista/productos/productos.jsp?status=error&action=eliminar");
+                }
+            }
+        } catch (NumberFormatException e) {
+            response.sendRedirect("vista/productos/productos.jsp?status=error&action=invalid&message=Datos%20inválidos");
+        } catch (Exception e) {
+            response.sendRedirect("vista/productos/productos.jsp?status=error&action=exception&message=" + e.getMessage());
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

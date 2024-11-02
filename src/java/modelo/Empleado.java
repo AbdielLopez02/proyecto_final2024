@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class Empleado extends Persona {
 
@@ -71,6 +72,27 @@ public class Empleado extends Persona {
     public void setId_puesto(int id_puesto) {
         this.id_puesto = id_puesto;
     }
+    
+    
+    
+     public HashMap<String, String> drop_empleados() {
+        HashMap<String, String> drop = new HashMap<>();
+        try {
+            String query = "SELECT e.id_empleado AS id, e.nombres, e.apellidos, e.direccion, e.telefono, e.dpi, e.genero, e.fecha_nacimiento, p.puesto, p.id_puesto, e.fecha_inicio_labores, e.fecha_ingreso FROM empleados AS e INNER JOIN puestos AS p ON e.id_puesto = p.id_puesto;";
+            cn = new conexion(); // Asegúrate de que la clase conexion esté implementada
+            cn.abrir_conexion();
+            ResultSet consulta = cn.conexionDB.createStatement().executeQuery(query);
+
+            // Recorre los resultados y almacena los empleados en el HashMap
+            while (consulta.next()) {
+                drop.put(consulta.getString("id"), consulta.getString("nombres"));
+            }
+            cn.cerrar_conexion();
+        } catch (SQLException ex) {
+            System.out.println("Error en drop_empleados: " + ex.getMessage());
+        }
+        return drop;
+    }
 
     @Override
     public DefaultTableModel leer() {
@@ -131,7 +153,7 @@ public class Empleado extends Persona {
             parametro.setString(3, getDireccion());
             parametro.setString(4, getTelefono());
             parametro.setString(5, getDpi());
-            parametro.setInt(6, getGenero()); // Manejado como boolean en Java
+            parametro.setInt(6, getGenero()); 
             parametro.setString(7, getFecha_nacimiento());
             parametro.setInt(8, getId_puesto());
             parametro.setString(9, getFecha_inicio_labores());

@@ -1,11 +1,9 @@
 
-
-<%@page import="java.util.HashMap" %>
+<%@page import="javax.swing.table.DefaultTableModel"%>
+<%@page import= "modelo.Marca" %>
+<%@page import= "modelo.Empleado" %>
+<%@page import = "java.util.HashMap" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%@page import="modelo.Marca" %>
-<%@page import="javax.swing.table.DefaultTableModel" %>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,153 +39,13 @@
   
   
   <body>
-    <div class="wrapper">
-      <!-- Sidebar -->
-      <div class="sidebar" data-background-color="dark">
-        <div class="sidebar-logo">
-          <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-           <a href="../../index.html" class="logo">
-                <img
-                    src="../../resources/img/bot.png"
-                    alt="navbar brand"
-                    class="navbar-brand"
-                    height="50" >
-                
-                <span class="logo-text">System Project</span> 
-            </a>
-
-
-            <div class="nav-toggle">
-              <button class="btn btn-toggle toggle-sidebar">
-                <i class="gg-menu-right"></i>
-              </button>
-              <button class="btn btn-toggle sidenav-toggler">
-                <i class="gg-menu-left"></i>
-              </button>
-            </div>
-            <button class="topbar-toggler more">
-              <i class="gg-more-vertical-alt"></i>
-            </button>
-          </div>
-          <!-- End Logo Header -->
-        </div>
-    <div class="sidebar-wrapper scrollbar scrollbar-inner">
-          <div class="sidebar-content">
-            <ul class="nav nav-secondary">  
-                <li class="nav-item active">
-            <a href="../../index.html" class="nav-link">
-                <i class="bi bi-house-door-fill"></i>
-                <p>Home</p>
-            </a>
-        </li>
-              <li class="nav-section">
-                <span class="sidebar-mini-icon">
-                <i class="bi bi-three-dots"></i>                
-                </span>
-                <h4 class="text-section">Menu Tablas</h4>
-              </li>
-             
-              
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#productos">
-                  <i class="bi bi-box-seam-fill"></i>
-                  <p>Productos</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="productos">
-                     <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../productos/productos.jsp">
-                        <span class="sub-item">CRUD Productos</span>
-                      </a>
-                    </li>   
-                    <li>                        
-                        <a href="../productos/marcas.jsp">
-                        <span class="sub-item">CRUD Marcas</span>
-                      </a>
-                    </li>
-                  </ul>
-                  
-                </div>
-              </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#ventas">
-                   <i class="bi bi-currency-exchange"></i>
-                   <p>Ventas</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="ventas">
-                  <ul class="nav nav-collapse">
-                     <li>
-                      <a href="../ventas/ventas.jsp">
-                        <span class="sub-item">CRUD Ventas</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/clientes.jsp">
-                        <span class="sub-item">CRUD Clientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/empleados.jsp">
-                        <span class="sub-item">CRUD Empleados</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/puestos.jsp">
-                        <span class="sub-item">CRUD Puestos</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>             
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#compras">
-                    <i class="bi bi-cart4"></i>
-                    <p>Compras</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="compras">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../compras/compras.jsp">
-                        <span class="sub-item">CRUD Compras</span>
-                      </a>
-                    </li> 
-                    <li>
-                      <a href="../compras/proveedores.jsp">
-                        <span class="sub-item">CRUD Proveedores</span>
-                      </a>
-                    </li>                    
-                  </ul>
-                </div>
-              </li>
-               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#reportes">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <p>Reportes</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="reportes">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../reportes/reportes.jsp">
-                        <span class="sub-item">Realizar reporte</span>
-                      </a>
-                    </li>                   
-                  </ul>
-                </div>
-              </li>
-             
-              
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- End Sidebar -->
-
-      <div class="main-panel">     
+    
+      
+      <div class="wrapper">
+     
+      <%@ include file="/menu.jsp" %>
+       
+      <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->
@@ -198,7 +56,7 @@
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
-                />
+                  />
               </a>
               <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -207,7 +65,7 @@
                 <button class="btn btn-toggle sidenav-toggler">
                   <i class="gg-menu-left"></i>
                 </button>
-              </div>
+               </div>
               <button class="topbar-toggler more">
                 <i class="gg-more-vertical-alt"></i>
               </button>
@@ -217,16 +75,14 @@
             
             
             
-
+            
             
             
             
             
           <!-- Navbar Header -->
-      <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+             <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                 <div class="container-fluid">
-
-
                  <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
 
@@ -251,102 +107,119 @@
                         <i class="bi bi-box-arrow-left me-2"></i>
                         <span>Logout</span>
                       </a>
-                    </li>
-                  </div>
-                </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
 
 
           <!-- End Navbar -->
+       </div>
+
+        <!--Espacio para contenido-->
+
+                  
+         
+ <div class="container">
+             <!-- The Modal -->
+        <div class="modal fade" id="modal_marcas">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Formulario</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">
+                  <form  action="<%= request.getContextPath() %>/sr_marcas"  method="post" class="form-group needs-validation" novalidate> <!-- get = envio de parametrosurl, post = oculto -->
+
+                    <label  for = "lbl_id_marcas" class="form-label"><b>ID</b></label>
+                    <input type="text" name="txt_id_marca" id="txt_id_marca" class="form-control" value = "0" readonly>
+
+                    <br>                                
+                    <label for = "lbl_marcas" class="form-label"><b>Marcas</b></label>
+                    <input type="text" id="txt_marca" name="txt_marca" class="form-control" required placeholder="Ingrese el puesto">
+
+                    <br>
+                    <button name="btn_crear" id="btn_crear" value="crear" class="btn btn-primary" type="submit"><i class="bi bi-floppy"></i></button>
+                    <button name="btn_actualizar" id="btn_actualizar" value="actualizar" class="btn btn-warning" type="submit"><i class="bi bi-arrow-down-up"></i></button>
+                    <button name="btn_eliminar" id="btn_eliminar" value="eliminar" class="btn btn-danger" type="submit" onclick="javascript:if(!confirm('¿Desea Eliminarl?'))return false"><i class="bi bi-trash"></i></button>
+          </form>
+              </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+
+            </div>
+          </div>
         </div>
-                    
-      <br>
-      <br>
-      <br>
-      <br>
-      <div align="center"><h1>CATALOGO MARCAS</h1></div> 
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_marca" onclick="limpiar()" >AGREGAR MARCA</button>
-        <div class="container">
-            <div class="modal fade" id="modal_marca" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">FORMULARIO MARCAS</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="../../sr_marcas" method="post" class="form-group">
-                <label for="lbl_id">ID:</label>
-                <input type="text" name="txt_id" id="txt_id" class="form-control" value="0" readonly>
                 
-                <label for="lbl_marca">MARCA:</label>
-                <input type="text" name="txt_marca" id="txt_marca" class="form-control" required>
-                <br>
-                <br>
-                <button name="btn_agregar" id="btn_agregar" value="agregar" class="btn btn-outline-success">AGREGAR</button>
-                <button name="btn_modificar" id="btn_modificar" value="modificar" class="btn btn-outline-primary">MODIFICAR</button>
-                <button name="btn_eliminar" id="btn_eliminar" value="eliminar" class="btn btn-outline-danger" onclick="javascript:if(!confirm('Desea Eliminar?'))return false" >ELIMINAR</button>
-                
-            </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-      </div>
-    </div>
-  </div>
-</div>                    
-                    
-                    
-                    
-                    
-                     <div class="container">
-  <h2>MARCAS</h2>
-  
-  <table class="table">
+          <div class="page-inner">
+            <div class="page-header">
+              <h3 class="fw-bold mb-3">Tabla Marcas</h3>
+             
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_marcas" onclick="limpiar()">Nuevo</button>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table id="basic-datatables"
+                        class="display table table-striped table-hover">
     <thead>
-      <tr>
-        <th>ID_MARCA</th>
-        <th>MARCA</th>
-      </tr>
+        <tr>          
+            <th>ID</th>           
+            <th>Marca</th>                   
+        </tr>
     </thead>
     <tbody id="tbl_marcas">
-         <%
-          Marca marca = new Marca();
-          DefaultTableModel tabla = new DefaultTableModel();
-          tabla = marca.mostrar();
-          for(int t = 0;t < tabla.getRowCount();t++){
-                out.println("<td>"+ tabla.getValueAt(t, 0) +"</td>");
-                out.println("<td>"+ tabla.getValueAt(t, 1) +"</td>");
-                out.println("</tr>");
-             }
-          %>
-    </tbody>
-  </table>
-</div>
-    
+        <%
+        
+        Marca marca = new Marca();
 
+        DefaultTableModel tabla = marca.leer(); // Cargar datos de la tabla 'puestos'
+            for (int t = 0; t < tabla.getRowCount(); t++) {
+                out.println("<tr data-id='" + tabla.getValueAt(t, 0) + "'>");
+                out.println("<td>" + tabla.getValueAt(t, 0) + "</td>"); // id_puesto
+                out.println("<td>" + tabla.getValueAt(t, 1) + "</td>"); // puesto
+                out.println("</tr>");
+            }
+
+        %>
+    </tbody>
+</table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+             
+
+             
+            </div>
+          </div>
+        </div>
+        
+        
         
 
-       <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              
-            </nav>
-            
-            
-          </div>
-        </footer>
-      </div>
 
-     
+                  
+                  
+        
+      </div>
     </div>
-      
-      
       
       
     
@@ -361,26 +234,6 @@
    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-LZTz/rX2m2H/aAe4NYq40YxjL89DICM2Fev4M/tvSRe9TbFg8beP2B3Rar9A3zM0" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-e8dtFdxD4qRvTndk65X8zRLUblX2n8jNiMmjGu/AeGKeRi9c18OqdfdNwsHbcDBn" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-
-<script type="text/javascript">
-                function limpiar(){
-                  $("#txt_id").val(0);
-                  $("#txt_marca").val('');
-                }
-
-                $('#tbl_marcas').on('click','tr td',function(evt){
-                  var target,id,marca;
-                  target = $(event.target);
-                  id = target.parent("tr").find("td").eq(0).html();
-                  marca = target.parent("tr").find("td").eq(1).html();
-                  
-                                  
-                  $("#txt_id").val(id);
-                  $("#txt_marca").val(marca);
-                  $("#modal_marca").modal('show');
-                });
-            </script>    
-
 
 
     <!-- jQuery Scrollbar -->
@@ -450,11 +303,33 @@
     </script>
     
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+function limpiar() {
+    $("#txt_id_marca").val(0);  
+    $("#txt_marca").val('');     
+}
+
+// Evento para seleccionar los datos al hacer clic en una fila de la tabla
+$('#tbl_marcas').on('click', 'tr td', function(evt) {
+    var target, id_marca, marca;
+
+    target = $(evt.target);  
+    id_marca = target.parent().data('id');  
+    marca = target.parent("tr").find("td").eq(1).html().trim();  
+
+    // Verificar los valores en la consola para depuración
+    console.log("ID Marca:", id_marca);
+    console.log("Puesto:", marca);
+
+    // Asignar los valores al formulario
+    $("#txt_id_marca").val(id_marca);
+    $("#txt_marca").val(marca);
+
+    // Mostrar el modal
+    $("#modal_marcas").modal('show');
+});
+</script>
        
 
 

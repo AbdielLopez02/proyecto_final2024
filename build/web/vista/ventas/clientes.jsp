@@ -1,7 +1,7 @@
 
 <%@page import="javax.swing.table.DefaultTableModel"%>
 <%@page import= "modelo.Puesto" %>
-<%@page import= "modelo.Empleado" %>
+<%@page import= "modelo.Cliente" %>
 <%@page import = "java.util.HashMap" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -39,152 +39,10 @@
   
   
   <body>
-    <div class="wrapper">
-      <!-- Sidebar -->
-      <div class="sidebar" data-background-color="dark">
-        <div class="sidebar-logo">
-          <!-- Logo Header -->
-          <div class="logo-header" data-background-color="dark">
-           <a href="../../index.html" class="logo">
-                <img
-                    src="../../resources/img/bot.png"
-                    alt="navbar brand"
-                    class="navbar-brand"
-                    height="50" >
-                
-                <span class="logo-text">System Project</span> 
-            </a>
-
-
-            <div class="nav-toggle">
-              <button class="btn btn-toggle toggle-sidebar">
-                <i class="gg-menu-right"></i>
-              </button>
-              <button class="btn btn-toggle sidenav-toggler">
-                <i class="gg-menu-left"></i>
-              </button>
-            </div>
-            <button class="topbar-toggler more">
-              <i class="gg-more-vertical-alt"></i>
-            </button>
-          </div>
-          <!-- End Logo Header -->
-        </div>
-    <div class="sidebar-wrapper scrollbar scrollbar-inner">
-          <div class="sidebar-content">
-            <ul class="nav nav-secondary">  
-                <li class="nav-item active">
-            <a href="../../index.html" class="nav-link">
-                <i class="bi bi-house-door-fill"></i>
-                <p>Home</p>
-            </a>
-        </li>
-              <li class="nav-section">
-                <span class="sidebar-mini-icon">
-                <i class="bi bi-three-dots"></i>                
-                </span>
-                <h4 class="text-section">Menu Tablas</h4>
-              </li>
-             
-              
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#productos">
-                  <i class="bi bi-box-seam-fill"></i>
-                  <p>Productos</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="productos">
-                     <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../productos/productos.jsp">
-                        <span class="sub-item">CRUD Productos</span>
-                      </a>
-                    </li>   
-                    <li>                        
-                        <a href="../productos/productos/marcas.jsp">
-                        <span class="sub-item">CRUD Marcas</span>
-                      </a>
-                    </li>
-                  </ul>
-                  
-                </div>
-              </li>
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#ventas">
-                   <i class="bi bi-currency-exchange"></i>
-                   <p>Ventas</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="ventas">
-                  <ul class="nav nav-collapse">
-                     <li>
-                      <a href="../ventas/ventas.jsp">
-                        <span class="sub-item">CRUD Ventas</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/clientes.jsp">
-                        <span class="sub-item">CRUD Clientes</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/empleados.jsp">
-                        <span class="sub-item">CRUD Empleados</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="../ventas/puestos.jsp">
-                        <span class="sub-item">CRUD Puestos</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>             
-              <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#compras">
-                    <i class="bi bi-cart4"></i>
-                    <p>Compras</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="compras">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../compras/compras.jsp">
-                        <span class="sub-item">CRUD Compras</span>
-                      </a>
-                    </li> 
-                    <li>
-                      <a href="../compras/proveedores.jsp">
-                        <span class="sub-item">CRUD Proveedores</span>
-                      </a>
-                    </li>                    
-                  </ul>
-                </div>
-              </li>
-               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#reportes">
-                    <i class="bi bi-file-earmark-spreadsheet"></i>
-                    <p>Reportes</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="reportes">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="../reportes/reportes.jsp">
-                        <span class="sub-item">Realizar reporte</span>
-                      </a>
-                    </li>                   
-                  </ul>
-                </div>
-              </li>
-             
-              
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- End Sidebar -->
-
+       <div class="wrapper">
+     
+      <%@ include file="/menu.jsp" %>
+       
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -196,7 +54,7 @@
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
-                />
+                  />
               </a>
               <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -205,7 +63,7 @@
                 <button class="btn btn-toggle sidenav-toggler">
                   <i class="gg-menu-left"></i>
                 </button>
-              </div>
+               </div>
               <button class="topbar-toggler more">
                 <i class="gg-more-vertical-alt"></i>
               </button>
@@ -221,10 +79,8 @@
             
             
           <!-- Navbar Header -->
-      <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+             <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                 <div class="container-fluid">
-
-
                  <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
 
 
@@ -249,32 +105,159 @@
                         <i class="bi bi-box-arrow-left me-2"></i>
                         <span>Logout</span>
                       </a>
-                    </li>
-                  </div>
-                </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+                      </li>
+                    </div>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </nav>
 
 
           <!-- End Navbar -->
-        </div>
+       </div>
+
+        <!--Espacio para contenido-->
+
+                  
+         
 
         
+        <div class="container">
+             <!-- The Modal -->
+<div class="modal fade" id="modal_clientes">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-       <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              
-            </nav>
-            
-            
-          </div>
-        </footer>
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Formulario</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
-     
+      <!-- Modal body -->
+      <div class="modal-body">
+          <form  action="<%= request.getContextPath() %>/sr_cliente"  method="post" class="form-group needs-validation" novalidate> <!-- get = envio de parametrosurl, post = oculto -->
+        
+            <label  for = "lbl_id" class="form-label"><b>ID</b></label>
+            <input type="text" name="txt_id" id="txt_id" class="form-control" value = "0" readonly>
+            
+            <br>
+         
+            <label for = "lbl_nombres"class="form-label"><b>Nombre</b></label>
+            <input type="text" name="txt_nombres" id="txt_nombres" class="form-control" placeholder="Ejemplo: Nombre1 Nombre2"required>
+            <br>
+
+            <label for = "lbl_apellidos"class="form-label"><b>Apellidos</b></label>
+            <input type="text" name="txt_apellidos" id="txt_apellidos"class="form-control"  placeholder="Ejemplo: Apellido1 Apellido 2"required>
+            <br>
+            
+            <label for = "lbl_direccion"class="form-label"><b>Nit</b></label>
+            <input type="text" name="txt_nit" id="txt_nit" class="form-control" placeholder="Ejemplo: 283321"required>
+            <br>
+             <label for = "lbl_genero" class="form-label"><b>Genero</b></label>
+                <select id="txt_genero" name="txt_genero" class="form-select" required>
+                   
+                    <option value="0">Masculino</option>
+                    <option value="1">Femenino</option>
+                </select>         
+            <br>
+
+            <label for = "lbl_telefono"class="form-label"><b>Telefono</b></label>
+            <input type="text" name="txt_telefono" id="txt_telefono" class="form-control"  placeholder="Ejemplo:1234-1232"required>
+            <br>
+            
+             <label for = "lbl_codigo" class="form-label"><b>Correo Electrónico</b></label>
+            <input type="text" name="txt_correo" id="txt_correo" class="form-control" placeholder="Ejemplo: 1111 22222 0101" required maxlength="15">
+            <br>
+            
+           
+                                                                   
+            <label for = "lbl_fi"class="form-label"><b>F. de ingreso</b></label>
+            <input type="datetime-local" name="txt_fi" id="txt_fi" class="form-control"  placeholder="Ejemplo:2003-09-09"required>
+            <br>
+            <br>
+            <button name="btn_crear" id="btn_crear" value="crear" class="btn btn-primary" type="submit"><i class="bi bi-floppy"></i></button>
+            <button name="btn_actualizar" id="btn_actualizar" value="actualizar" class="btn btn-warning" type="submit"><i class="bi bi-arrow-down-up"></i></button>
+            <button name="btn_eliminar" id="btn_eliminar" value="eliminar" class="btn btn-danger" type="submit" onclick="javascript:if(!confirm('¿Desea Eliminarl?'))return false"><i class="bi bi-trash"></i></button>
+  </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+                
+          <div class="page-inner">
+            <div class="page-header">
+              <h3 class="fw-bold mb-3">Tabla Clientes</h3>
+             
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_clientes" onclick="limpiar()">Nuevo</button>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table id="basic-datatables"
+                        class="display table table-striped table-hover">
+    <thead>
+        <tr>          
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>NIT</th>
+            <th>Género</th>
+            <th>Teléfono</th>
+            <th>Correo Electrónico</th> <!-- Campo DPI -->            
+            <th>Fecha Ingreso</th> <!-- Campo Fecha Ingreso -->
+        </tr>
+    </thead>
+    <tbody id="tbl_clientes">
+        <%
+        Cliente cliente = new Cliente();
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla = cliente.leer();
+       for(int t=0;t<tabla.getRowCount(); t++){
+               out.println("<tr data-id='" + tabla.getValueAt(t, 0) + "'>");
+               out.println("<td>"  + tabla.getValueAt(t, 1) + "</td>");
+               out.println("<td> " + tabla.getValueAt(t, 2) + "</td>");
+               out.println("<td> " + tabla.getValueAt(t, 3) + "</td>");
+               out.println("<td> " + tabla.getValueAt(t, 4) + "</td>");
+               out.println("<td> " + tabla.getValueAt(t, 5) + "</td>");
+               out.println("<td> " + tabla.getValueAt(t, 6) + "</td>");
+               out.println("<td> " + tabla.getValueAt(t, 7) + "</td>");
+              
+
+               out.println("</tr>");
+               
+            }
+        %>
+    </tbody>
+</table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+             
+
+             
+            </div>
+          </div>
+        </div>
+        
+
+
+                  
+                  
+        
+      </div>
     </div>
       
       
@@ -361,8 +344,66 @@
     </script>
     
     
-    
-       
+    <script type="text/javascript">
+
+function limpiar() {
+    $("#txt_id").val(0);
+    $("#txt_nombres").val('');
+    $("#txt_apellidos").val('');
+    $("#txt_nit").val('');
+    $("#txt_genero").val(0); 
+    $("#txt_telefono").val('');
+    $("#txt_correo").val('');    // 0 para Masculino, 1 para Femenino  
+    $("#txt_fi").val('');
+}
+
+// Evento para seleccionar los datos al hacer clic en una fila de la tabla
+$('#tbl_clientes').on('click', 'tr td', function(evt) {
+    var target, id, nombres, apellidos, nit, genero, telefono, correo,  fecha_ingreso;
+    target = $(evt.target);  // Usar 'evt' como el evento
+    id = target.parent().data('id');  // ID del cliente
+
+
+    nombres = target.parent("tr").find("td").eq(0).html();  // Nombres
+    apellidos = target.parent("tr").find("td").eq(1).html().trim();  // Apellidos
+    nit = target.parent("tr").find("td").eq(2).html().trim();  // NIT
+    genero = target.parent("tr").find("td").eq(3).html().trim();  // Género    
+    telefono = target.parent("tr").find("td").eq(4).html().trim();  // Teléfono
+    correo = target.parent("tr").find("td").eq(5).html().trim();  // Correo Electrónico   
+    fecha_ingreso = target.parent("tr").find("td").eq(6).html().trim();  // Fecha de Ingreso
+
+    // Convertir género de texto a número
+    if (genero === "Masculino") {
+        $("#txt_genero").val(0);
+    } else if (genero === "Femenino") {
+        $("#txt_genero").val(1);
+    }
+
+    // Verificar los valores en la consola para depuración
+    console.log("ID:", id);
+    console.log("Nombres:", nombres);
+    console.log("Apellidos:", apellidos);
+    console.log("NIT:", nit);
+    console.log("Género:", genero); 
+    console.log("Teléfono:", telefono);
+    console.log("Correo Electrónico:", correo);      
+    console.log("Fecha de Ingreso:", fecha_ingreso);
+
+    // Asignar los valores al formulario
+    $("#txt_id").val(id);
+    $("#txt_nombres").val(nombres);
+    $("#txt_apellidos").val(apellidos);
+    $("#txt_nit").val(nit);
+    $("#txt_telefono").val(telefono);
+    $("#txt_correo").val(correo);  
+    $("#txt_fi").val(fecha_ingreso);
+
+    // Mostrar el modal
+    $("#modal_clientes").modal('show');
+});
+</script>
+
+
 
 
   </body>

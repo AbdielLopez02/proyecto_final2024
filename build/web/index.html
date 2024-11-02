@@ -28,6 +28,10 @@
                     <div id="mensaje-error" class="alert alert-danger" role="alert" style="display: none;">
                         Datos incorrectos. Por favor, verifica tu usuario y contraseña.
                     </div>
+                    
+                    <div id="mensaje-warning" class="alert alert-danger" role="alert" style="display: none;">
+                        Acceso denegado, inicia sesión nuevamente.
+                    </div>            
 
                     <form action="Validar" method="post">
                         <div class="form-outline mb-4">
@@ -75,9 +79,18 @@
         if (urlParams.has('error')) {
             document.getElementById('mensaje-error').style.display = 'block';
         }
+        
+        
+        if (urlParams.has('warning')) {
+            document.getElementById('mensaje-warning').style.display = 'block';
+        }
     </script>
 
     <script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    
+    
+
 </body>
 
 </html>
